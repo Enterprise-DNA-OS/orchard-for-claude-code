@@ -49,7 +49,7 @@ h1,h2,.biz{font-family:Poppins,system-ui,sans-serif}
 main{max-width:1100px;margin:0 auto;padding:24px 20px 60px}
 section{background:var(--paper);border-radius:14px;padding:18px 20px;margin:0 0 18px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
 h2{margin:0 0 8px;font-size:16px;color:var(--p);text-transform:uppercase;letter-spacing:.08em}.note{margin:0 0 10px;color:#555}
-.table-scroll{max-width:100%;overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:14px}th{text-align:left;font-weight:600;color:#666;border-bottom:2px solid #eee;padding:8px 10px;white-space:nowrap}
+.table-scroll{max-width:100%;overflow-x:auto}.table-scroll{overflow-x:auto;max-width:100%}table{width:100%;border-collapse:collapse;font-size:14px}th{text-align:left;font-weight:600;color:#666;border-bottom:2px solid #eee;padding:8px 10px;white-space:nowrap}
 td{padding:8px 10px;border-bottom:1px solid #f0f0f4;vertical-align:top}tr:hover td{background:#faf9ff}.empty{color:#888;margin:0}
 footer{text-align:center;color:#888;font-size:12px;padding:20px}
 @media(max-width:600px){header{flex-wrap:wrap;padding:18px}header .biz{margin-left:0}main{padding:16px 10px}section{padding:14px}th,td{padding:7px}}

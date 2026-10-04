@@ -1,43 +1,46 @@
-# Orchard for Claude Code: operating instructions
+# Orchard for Claude Code
 
-This file is the brain. Claude Code reads it at the start of every session. It says who this is for, how work gets done, and the one right way to do each recurring job.
+For an orchard or vineyard owner reviewing blocks, spray diaries, picking, labour allocation and irrigation. Set your business, region, crop programmes, block codes, reviewer and cost currency before importing live data. Demo records are fictional.
 
-## Who this is for
+Read the matching recipe in .claude/commands. Every answer starts with a CLI read. Use `npm run orchard -- help` for the command list and `scripts/orchard.mjs` for write flags. Commands accept --json. Names are case insensitive; ambiguous matches list candidates and fail.
 
-- **Business:** [YOUR BUSINESS]
-- **Operator:** [YOUR NAME], [your role]
-- **What matters most:** [the one or two outcomes you care about]
-
-Fill this in once. A worker with context knows. A worker without it guesses.
-
-## How to work
-
-1. **Take a brief, not a script.** The operator describes the outcome. You run the right command and present the answer.
-2. **Read before you write.** Before drafting anything about a record, read its full history first.
-3. **Plain language.** Short sentences. No filler. Numbers in tables.
-4. **Silent success, loud problems.** No play-by-play. Say what broke and what you did about it.
-5. **Stop at the line.** Anything that sends, deletes, or faces a customer waits for a yes in this session.
-
-## Routing table: one right way for each recurring job
-
-| When the operator asks for... | Use this |
+| Job | Recipe |
 |---|---|
-| <!-- TODO(author): one row per slash command --> | `/...` |
+| `/add` | add |
+| `/attention` | attention |
+| `/block` | block |
+| `/blocks` | blocks |
+| `/complete-task` | complete task |
+| `/compliance` | compliance |
+| `/customise` | customise |
+| `/documents` | documents |
+| `/draft-weekly` | draft weekly |
+| `/export` | export |
+| `/harvest-plan` | harvest plan |
+| `/harvests` | harvests |
+| `/import` | import |
+| `/irrigation` | irrigation |
+| `/labour-review` | labour review |
+| `/log` | log |
+| `/new-view` | new view |
+| `/review-diary` | review diary |
+| `/spray-diary` | spray diary |
+| `/tasks` | tasks |
+| `/trace` | trace |
+| `/weekly-review` | weekly review |
+| `/workers` | workers |
+| `/yields` | yields |
 
-If an ask fits nothing here, run the CLI directly (`npm run <cli> -- --help`) and then propose a new command for it.
+Rules:
 
-## Hard rules
+- Never invent a spray label, interval, certification, weight, cost or command output.
+- Read the block or trace before changing a record. Do not bypass a blocked harvest.
+- No sends, dispatches, payments or external writes. Documents and messages are drafts.
+- Compliance checks are record checks, not proof of food safety, market access or certification. Read docs/compliance.md.
+- Unknown intervals remain unknown. Imported harvest history stays held. There is no release command.
+- Labour costs are supplied allocations, not wages or payroll. Every cost uses the business's one chosen currency.
+- Performance totals cover all loaded history. Do not describe them as a season until a season filter is added.
+- No record deletion. Back up before a migration. Use numbered migrations for changes, then npm test.
+- Embedded mode supports one process at a time. Shared operations need database access controls and tested backups.
 
-- Never send email or messages from here. Draft to `drafts/`, a person sends.
-- Never delete records without an explicit yes in this session. Prefer marking closed or archived.
-- Never invent a record. If a name is ambiguous, list the candidates and ask.
-- The database is the source of truth. If the answer is not in it, say so.
-
-## Where things live
-
-- `scripts/` the CLI. `scripts/lib/db.mjs` picks `DATABASE_URL` (Postgres, Supabase) or the embedded database in `.data/`.
-- `supabase/migrations/` the schema, plain SQL. `npm run migrate` applies it.
-- `.claude/commands/` the slash commands. Add one every time the same ask comes twice.
-- `docs/` the thesis and the guide for moving off Croptracker.
-
-Built by Enterprise DNA. Installed and run for you as part of Omni: https://enterprisedna.co/omni/instead-of/croptracker
+The schema lives in supabase/migrations, the CLI in scripts/orchard.mjs, and presentation in brand.json, views.json and documents.json. AGENTS.md routes other coding agents here. Omni by Enterprise DNA installs and runs a customised version.

@@ -1,0 +1,12 @@
+[
+  "Which blocks have pick dates before their recorded spray interval ends?",
+  "Which blocks have no recent diary review?",
+  "Which spray entries still lack a label rule?",
+  "Which recorded picks overlap a prior spray interval?",
+  "Which harvest lots have no destination or docket?",
+  "Which blocks have the highest recorded labour cost per kilogram?",
+  "Where have we logged labour but no harvest yet?",
+  "How much recorded irrigation water is allocated per harvested kilogram?",
+  "Which block tasks are overdue and who owns them?",
+  "Which spray records used an operator whose training date had passed?"
+]

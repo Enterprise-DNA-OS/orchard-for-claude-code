@@ -1,11 +1,45 @@
 [
   {
-    "name": "example",
-    "title": "TODO(author): the first document this industry must produce",
-    "for_each": "select gen_random_uuid() as id, 'Example' as name",
-    "file": "name",
+    "name": "spray-diary",
+    "title": "Spray diary for review",
+    "for_each": "select id,code from blocks order by code",
+    "file": "code",
     "sections": [
-      { "title": "Details", "sql": "select 'replace me' as item, $1::text as record_id" }
+      {
+        "title": "Block",
+        "sql": "select code,name,crop,variety,workplace_address from blocks where id=$1"
+      },
+      {
+        "title": "Applications",
+        "sql": "select s.ref,s.product,s.applied_at,s.amount,s.unit,w.name operator,s.wind_speed_kmh,s.wind_direction,s.boundary_measures,s.whp_days,s.rei_hours,s.label_ref from sprays s join workers w on w.id=s.worker_id where s.block_id=$1 order by applied_at",
+        "note": "Check original labels and programme rules. Missing values are unresolved."
+      }
+    ]
+  },
+  {
+    "name": "harvest-docket",
+    "title": "Harvest record, review status before use",
+    "for_each": "select id,ref from harvests order by ref",
+    "file": "ref",
+    "sections": [
+      {
+        "title": "Trace and destination",
+        "sql": "select h.ref,b.code block,b.name,b.variety,h.picked_at,h.bins,h.kg,h.destination,h.docket,h.status from harvests h join blocks b on b.id=h.block_id where h.id=$1",
+        "note": "A held record is not clearance to dispatch fruit."
+      }
+    ]
+  },
+  {
+    "name": "labour-summary",
+    "title": "Labour allocation, not payroll",
+    "for_each": "select id,code from blocks order by code",
+    "file": "code",
+    "sections": [
+      {
+        "title": "Recorded time and costs",
+        "sql": "select w.name worker,l.worked_on,l.activity,l.hours,l.cost from labour l join workers w on w.id=l.worker_id where l.block_id=$1 order by worked_on",
+        "note": "Costs are supplied allocations. No wages, tax, entitlements or payments are calculated."
+      }
     ]
   }
 ]

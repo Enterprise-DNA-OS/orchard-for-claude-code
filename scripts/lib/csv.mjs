@@ -1,6 +1,6 @@
 // RFC-style CSV: BOM, CRLF, embedded newlines and doubled quotes.
 // Preserve field text; reject malformed or duplicate headers and uneven rows.
-export function parseCsv(input) {
+export function parseCsv(input, { allowDuplicate = [] } = {}) {
  const text=String(input).replace(/^\uFEFF/,'');
  const rows=[];let row=[],field='',state='plain';
  const pushField=()=>{row.push(field);field='';state='plain';};
@@ -19,7 +19,8 @@ export function parseCsv(input) {
  if(state==='quoted')throw Error('Malformed CSV: unclosed quoted field');
  if(field!==''||row.length||state==='closed')pushRow();
  const nonempty=rows.filter(r=>r.some(v=>v.trim()!==''));if(!nonempty.length)return [];
- const header=nonempty.shift().map(h=>h.trim());
+ const counts=new Map();
+ const header=nonempty.shift().map(h=>{h=h.trim();const key=h.toLowerCase();const n=(counts.get(key)||0)+1;counts.set(key,n);return n>1&&allowDuplicate.some(x=>x.toLowerCase()===key)?`${h} (${n})`:h;});
  if(header.some(h=>!h)||new Set(header.map(h=>h.toLowerCase())).size!==header.length)throw Error('CSV requires unique, nonempty column names');
  return nonempty.map((r,i)=>{if(r.length!==header.length)throw Error(`CSV row ${i+2}: expected ${header.length} fields, found ${r.length}`);return Object.fromEntries(header.map((h,j)=>[h,r[j]]));});
 }

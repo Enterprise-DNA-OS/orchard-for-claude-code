@@ -1,13 +1,24 @@
 [
   {
     "name": "week",
-    "title": "This week",
-    "subtitle": "Orchard for Claude Code: what needs attention, rendered by npm run view",
+    "title": "Orchard week",
+    "subtitle": "Recorded holds and work to review, not harvest clearance",
     "sections": [
       {
         "title": "Needs attention",
-        "note": "TODO(author): point this at the industry's attention view (overdue, stuck, quiet).",
-        "sql": "select 'replace me' as item, 'TODO(author)' as why"
+        "sql": "select * from orchard_attention order by priority,block"
+      },
+      {
+        "title": "Pick planning",
+        "sql": "select code,block,planned_pick,pick_after,enter_after,decision from block_readiness order by code"
+      },
+      {
+        "title": "Block performance, all recorded history",
+        "sql": "select code,block,kg,kg_per_hectare,bins,round(hours,2) hours,labour_cost,labour_cost_per_kg from block_performance order by code"
+      },
+      {
+        "title": "Water allocation, all recorded history",
+        "sql": "select code,block,irrigation_litres,litres_per_kg from block_performance order by code"
       }
     ]
   }

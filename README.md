@@ -1,115 +1,120 @@
-<h1 align="center">Orchard for Claude Code</h1>
+# Orchard for Claude Code
 
-<p align="center">
-  <strong>The open-source orchard and vineyard records system that is just a database and Claude Code.</strong>
-</p>
+Blocks, spray diaries, harvest lots and labour allocation in a database you own. Built by Enterprise DNA. Free under MIT. Works with Claude Code, Codex, OpenCode or Cursor.
 
-<p align="center">
-  Created by <a href="https://www.enterprisedna.co"><strong>Enterprise DNA</strong></a>. Free and open source. Works with Claude Code, Codex, OpenCode or Cursor.
-</p>
-
-<!-- three-doors -->
-<table align="center">
-  <tr>
-    <td align="center"><strong>Do it yourself</strong><br/>Clone it, run it, own it. Free, MIT.<br/><a href="#quick-start">Quick start</a></td>
-    <td align="center"><strong>We customise it</strong><br/>Your fields, your rules, your Croptracker data brought across.<br/><a href="https://enterprisedna.co/omni/book/?utm_source=github&utm_medium=readme&utm_campaign=croptracker">Book a call</a></td>
-    <td align="center"><strong>We run it for you</strong><br/>Installed, connected and operated inside Omni. Setup fee, then a retainer.<br/><a href="https://enterprisedna.co/omni/instead-of/croptracker?utm_source=github&utm_medium=readme&utm_campaign=croptracker">How it works</a></td>
-  </tr>
-</table>
-
-<p align="center">
-  <a href="#what-is-this">What is this</a> &bull;
-  <a href="#why-no-front-end">Why no front end</a> &bull;
-  <a href="#quick-start">Quick start</a> &bull;
-  <a href="#the-commands">Commands</a> &bull;
-  <a href="#instead-of-croptracker">Instead of Croptracker</a> &bull;
-  <a href="#want-it-installed-and-run-for-you">Installed for you</a> &bull;
-  <a href="#license">License</a>
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Node-20+-339933?style=flat-square" alt="Node 20+" />
-  <img src="https://img.shields.io/badge/PostgreSQL-any-336791?style=flat-square" alt="PostgreSQL" />
-  <img src="https://img.shields.io/badge/PGlite-embedded-3ecf8e?style=flat-square" alt="PGlite" />
-  <img src="https://img.shields.io/badge/License-MIT-yellow?style=flat-square" alt="MIT License" />
-</p>
-
----
-
-## What is this
-
-Orchard for Claude Code does the job you pay Croptracker for, as a Postgres database and a set of agent commands. There is no web front end. You open the folder in [Claude Code](https://claude.com/claude-code) (or Codex, OpenCode, Cursor: see `AGENTS.md`) and ask for what you want in plain language. It runs the right query, and it can answer questions the Croptracker dashboard cannot.
-
-<!-- TODO(author): the annual bill. One sentence: what a 10 to 50 person business typically pays Croptracker per year, all in, with a source. -->
-
-Want the same thing with a web front end, or built on a different stack? That is a customisation, and it is exactly what Enterprise DNA does: [book a call](https://enterprisedna.co/omni/book/?utm_source=github&utm_medium=readme&utm_campaign=croptracker).
-
-<!-- TODO(author): two or three sentences on what this specific product covers and who it is for. -->
-
-## Why no front end
-
-- The front end was only ever there because the database was hard to talk to. That is no longer true.
-- Your data sits in plain Postgres tables you own. Any tool can read them. No export, no lock-in.
-- No seats, no tiers, no add-ons. Read [docs/why-no-front-end.md](docs/why-no-front-end.md) for the honest trade-offs too.
+| Do it yourself | We customise it | We run it for you |
+|---|---|---|
+| Free code. Clone and run it. Agent and hosting costs are yours. | Your fields, rules, capture screens and Croptracker export mapping. [Book a call](https://enterprisedna.co/omni/book?offer=replace-software&utm_campaign=croptracker&utm_medium=github). | Installed, connected and operated through Omni by Enterprise DNA. One setup fee, then a retainer. [See the offer](https://enterprisedna.co/omni/instead-of/croptracker). |
 
 ## Quick start
-
-Sixty seconds, no database install (an embedded Postgres runs inside Node):
 
 ```bash
 git clone https://github.com/Enterprise-DNA-OS/orchard-for-claude-code.git
 cd orchard-for-claude-code
 npm install
 npm run demo
+npm test
+npm run view
+npm run docs
 ```
 
-Then open the folder in Claude Code and type a slash command. <!-- TODO(author): name the first command to try. -->
+Node 20 or newer. Local mode uses embedded PGlite, without a server. Demo data includes a spray hold, a held harvest without a docket, missing label evidence, overdue tasks and expired training. Products and intervals are fictional. The demo is idempotent and must stay separate from live data.
 
-### Use it with your own Postgres or Supabase
+For a shared Postgres database, supply DATABASE_URL through the environment and run `npm run migrate`. The same SQL and CLI run on both adapters. Configure access controls and backups before team use. A local database accepts one process at a time.
 
-Copy `.env.example` to `.env`, set `DATABASE_URL`, then `npm run migrate`. Same commands, shared data, no per-seat fee.
+## Weekly work
 
-## The commands
+| `/add` | add |
+| `/attention` | attention |
+| `/block` | block |
+| `/blocks` | blocks |
+| `/complete-task` | complete task |
+| `/compliance` | compliance |
+| `/customise` | customise |
+| `/documents` | documents |
+| `/draft-weekly` | draft weekly |
+| `/export` | export |
+| `/harvest-plan` | harvest plan |
+| `/harvests` | harvests |
+| `/import` | import |
+| `/irrigation` | irrigation |
+| `/labour-review` | labour review |
+| `/log` | log |
+| `/new-view` | new view |
+| `/review-diary` | review diary |
+| `/spray-diary` | spray diary |
+| `/tasks` | tasks |
+| `/trace` | trace |
+| `/weekly-review` | weekly review |
+| `/workers` | workers |
+| `/yields` | yields |
 
-<!-- TODO(author): a table of the slash commands in .claude/commands and what each one does. -->
+`npm run orchard -- help` lists the CLI. Add --json for machine output. Every read supports plain text. Block, worker, task and harvest references accept codes, partial UUIDs and case-insensitive names, with ambiguity reported rather than guessed.
 
-| Command | What it does |
-|---|---|
-| `/...` | ... |
-
-## Instead of croptracker
-
-<!-- TODO(author): how to bring data across from Croptracker; link docs/replace-croptracker.md -->
-
-## Architecture
-
+```bash
+npm run orchard -- add block --code=B05 --name="West Fuji" --crop=Apple --variety=Fuji --hectares=3 --address="Your orchard address"
+npm run orchard -- add worker --code=W04 --name="Your operator" --training-expires=2027-06-30
+npm run orchard -- log note --block=B05 --note="First block walk recorded"
+npm run orchard -- add task --ref=T05 --block=B05 --title="Review spray diary" --due=2026-10-10 --owner="Your operator"
 ```
-orchard-for-claude-code/
-  CLAUDE.md                 how the operator wants this run (routing table + house rules)
-  AGENTS.md                 the same, for Codex / OpenCode / Cursor / Gemini CLI
-  .claude/commands/         the slash commands
-  scripts/                  the CLI the commands drive
-  scripts/lib/db.mjs        one adapter: DATABASE_URL (pg) or embedded PGlite
-  supabase/migrations/      plain SQL schema
-  supabase/seed.sql         demo data
-  docs/                     the thesis and the migration guide
+
+Required write flags are documented in [docs/cli.md](docs/cli.md). Dates use ISO format. Spray and pick timestamps include a timezone. Missing or malformed numbers fail. Supplied labour costs use your single chosen currency and do not calculate payroll.
+
+## Records and checks
+
+Eight tables hold blocks, workers, sprays, harvests, labour, irrigation, tasks and notes. Three shared views produce the attention list, pick planning and performance totals. Totals cover all loaded history, not an inferred season.
+
+A live harvest entry fails if a prior spray interval is unresolved, withholding or reentry time remains, or the diary has not been reviewed. Imports preserve history in held status. A late-entered spray is reported by the next compliance review. No command releases or dispatches fruit.
+
+[Compliance rules and sources](docs/compliance.md) distinguish cited guidance from house policies. These checks do not certify NZGAP, GLOBALG.A.P., residue safety or export access.
+
+## Ten questions to ask across your records
+
+Croptracker provides configurable reports and custom reporting. We have not established that these questions are impossible there. Here they are reproducible reads you can change yourself.
+
+1. Which blocks have pick dates before their recorded spray interval ends? (`harvest-plan`)
+2. Which blocks have no recent diary review? (`compliance`)
+3. Which spray entries still lack a label rule? (`compliance`)
+4. Which recorded picks overlap a prior spray interval? (`compliance`)
+5. Which harvest lots have no destination or docket? (`attention`)
+6. Which blocks have the highest recorded labour cost per kilogram? (`yields`)
+7. Where have we logged labour but no harvest yet? (`yields`)
+8. How much recorded irrigation water is allocated per harvested kilogram? (`yields`)
+9. Which block tasks are overdue and who owns them? (`tasks`)
+10. Which spray records used an operator whose training date had passed? (`compliance`)
+
+## Documents and views
+
+`npm run docs` creates spray diaries, harvest dockets and labour summaries in docs-out/. `npm run view` creates the orchard week dashboard in views/. They use brand.json for the business name, logo and colours. Read-only output, no web app and nothing sends. /new-view adds an agreed view from a numbered migration.
+
+## Your first hour: ten things to ask for
+
+1. Set our orchard name and reviewer.
+2. Put our logo on the spray diary.
+3. Add our block codes and varieties.
+4. Bring across a harvest report with its original units checked.
+5. Add our buyer programme reference to each block.
+6. Show overdue tasks by owner.
+7. Add a season filter to the performance review.
+8. Change the diary review interval to our agreed policy.
+9. Add maturity sampling records.
+10. Draft our weekly block review.
+
+/customise reads the current schema, writes a numbered migration, updates affected commands and documents, runs it and tests the result.
+
+## Instead of Croptracker
+
+The [switch guide](docs/replace-croptracker.md) covers report export, supported columns, mapping, dry runs and reconciliation. The base imports the standard Harvest Inventory Report for bin records, or a mapped harvest CSV, in one command. It does not transfer every Croptracker module. The fixture is synthetic. Reimports are idempotent; conflicting history fails atomically.
+
+```bash
+npm run orchard -- import croptracker --file=examples/croptracker-harvest.csv --dry-run
+npm run orchard -- export
 ```
 
-## Built for coding agents
+[Why no front end](docs/why-no-front-end.md) explains mobile, offline and device limitations. This base does not include machine vision, packhouse operations or payroll. Enterprise DNA scopes those connections and capture screens with you.
 
-The database, CLI and command recipes work with Claude Code, Codex, OpenCode or Cursor. Ask your coding agent for a new command and have it implement and test the change against the same records.
+## Verification and licence
 
-## Contributing
+`npm test` uses a temporary database, runs migrations and seed twice, checks every CLI path, exercises rejected writes, imports, rollback, HTML documents and JSON export. CI runs Linux and Windows plus a separate PostgreSQL job. Never run tests against a live database.
 
-Issues and pull requests are welcome. Keep the shape: plain SQL, a small CLI, a slash command per recurring job, no front end.
-
-## Want it installed and run for you?
-
-Enterprise DNA installs Orchard for Claude Code for your business, migrates your Croptracker data, connects it to the rest of your tools, and runs it for you as part of **Omni**, our managed Command Center. One setup fee, then a monthly retainer.
-
-- Book a call: [enterprisedna.co/omni/book](https://enterprisedna.co/omni/book/?offer=replace-software&utm_source=github&utm_medium=readme&utm_campaign=croptracker)
-- Read more: [enterprisedna.co/omni/instead-of/croptracker](https://enterprisedna.co/omni/instead-of/croptracker?utm_source=github&utm_medium=readme&utm_campaign=croptracker)
-
-## License
-
-MIT. Copyright (c) 2026 Enterprise DNA.
+Built with Codex. MIT. Copyright 2026 Enterprise DNA.
