@@ -4,7 +4,7 @@ Blocks, spray diaries, harvest lots and labour allocation in a database you own.
 
 | Do it yourself | We customise it | We run it for you |
 |---|---|---|
-| Free code. Clone and run it. Agent and hosting costs are yours. | Your fields, rules, capture screens and Croptracker export mapping. [Book a call](https://enterprisedna.co/omni/book?offer=replace-software&utm_campaign=croptracker&utm_medium=github). | Installed, connected and operated through Omni by Enterprise DNA. One setup fee, then a retainer. [See the offer](https://enterprisedna.co/omni/instead-of/croptracker). |
+| Free code. Clone and run it. Agent and hosting costs are yours. | Your fields, rules, capture screens and Croptracker export mapping. [Book a call](https://enterprisedna.co/omni/book?offer=replace-software&utm_campaign=croptracker&utm_medium=github). | Installed, connected and operated through Omni by Enterprise DNA. One setup fee, then a retainer. [See the offer](https://enterprisedna.co/omni/instead-of/croptracker?utm_source=github&utm_medium=readme&utm_campaign=croptracker). |
 
 ## Quick start
 
